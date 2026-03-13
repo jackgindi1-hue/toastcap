@@ -140,111 +140,158 @@ const businessTypes = [
 
 // Interactive Bar Chart Component
 function InteractiveBarChart() {
-  // Example data for 7 days
-  const chartData = [
-    { day: 'Mon', sales: 4200, payment: 420 },
-    { day: 'Tue', sales: 5100, payment: 510 },
-    { day: 'Wed', sales: 3800, payment: 380 },
-    { day: 'Thu', sales: 6100, payment: 610 },
-    { day: 'Fri', sales: 7200, payment: 720 },
-    { day: 'Sat', sales: 8900, payment: 890 },
-    { day: 'Sun', sales: 5400, payment: 540 },
+  const [viewMode, setViewMode] = useState<'daily' | 'weekly'>('daily');
+  const [selectedBar, setSelectedBar] = useState<number | null>(null);
+
+  // Daily data - 7 days
+  const dailyData = [
+    { label: 'Mon', sales: 4200, payment: 420 },
+    { label: 'Tue', sales: 5100, payment: 510 },
+    { label: 'Wed', sales: 3800, payment: 380 },
+    { label: 'Thu', sales: 6100, payment: 610 },
+    { label: 'Fri', sales: 7200, payment: 720 },
+    { label: 'Sat', sales: 8900, payment: 890 },
+    { label: 'Sun', sales: 5400, payment: 540 },
   ];
+
+  // Weekly data - 4 weeks
+  const weeklyData = [
+    { label: 'Week 1', sales: 28500, payment: 2850 },
+    { label: 'Week 2', sales: 32100, payment: 3210 },
+    { label: 'Week 3', sales: 29800, payment: 2980 },
+    { label: 'Week 4', sales: 35600, payment: 3560 },
+  ];
+
+  const chartData = viewMode === 'daily' ? dailyData : weeklyData;
 
   // Find max for scaling
   const maxSales = Math.max(...chartData.map(d => d.sales));
   // 20% larger: scale height
-  const chartHeight = 360; // px (was 300)
-
-  const [selectedBar, setSelectedBar] = useState<number | null>(null);
+  const chartHeight = 360;
+  const barWidth = viewMode === 'daily' ? 32 : 48;
+  const paymentBarWidth = viewMode === 'daily' ? 14 : 20;
+  const barSpacing = viewMode === 'daily' ? 80 : 120;
 
   // Colors
   const salesColor = '#FF6B35';
-  const paymentColor = '#C85000'; // darker orange
+  const paymentColor = '#C85000';
+
+  // Reset selection when view mode changes
+  useEffect(() => {
+    setSelectedBar(null);
+  }, [viewMode]);
 
   return (
-    <div className="max-w-4xl mx-auto flex flex-col items-center">
+    <div className="max-w-5xl mx-auto flex flex-col items-center">
+      {/* Toggle Switch */}
+      <div className="flex items-center gap-2 mb-8 bg-gray-100 p-1 rounded-full">
+        <button
+          onClick={() => setViewMode('daily')}
+          className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
+            viewMode === 'daily'
+              ? 'bg-[#FF6B35] text-white shadow-md'
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          Daily
+        </button>
+        <button
+          onClick={() => setViewMode('weekly')}
+          className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
+            viewMode === 'weekly'
+              ? 'bg-[#FF6B35] text-white shadow-md'
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          Weekly
+        </button>
+      </div>
+
       <div className="w-full overflow-x-auto">
         <svg
           width="100%"
           height={chartHeight + 60}
-          viewBox={`0 0 ${chartData.length * 80} ${chartHeight + 60}`}
+          viewBox={`0 0 ${chartData.length * barSpacing + 40} ${chartHeight + 60}`}
           className="mx-auto"
         >
           {/* Y axis labels */}
           {[0, 0.25, 0.5, 0.75, 1].map((t, i) => (
             <text
               key={i}
-              x={0}
+              x={5}
               y={chartHeight - t * chartHeight + 20}
-              fontSize="13"
+              fontSize="12"
               fill="#bbb"
               textAnchor="start"
             >
-              ${Math.round(maxSales * t)}
+              ${(Math.round(maxSales * t) / 1000).toFixed(0)}k
             </text>
           ))}
           {/* Bars */}
           {chartData.map((d, i) => {
             const salesBarHeight = (d.sales / maxSales) * chartHeight;
             const paymentBarHeight = (d.payment / maxSales) * chartHeight;
+            const xPos = i * barSpacing + 50;
             return (
               <g key={i}>
                 {/* Sales bar */}
                 <rect
-                  x={i * 80 + 30}
+                  x={xPos}
                   y={chartHeight - salesBarHeight + 20}
-                  width={32}
+                  width={barWidth}
                   height={salesBarHeight}
                   rx={8}
                   fill={salesColor}
-                  className="cursor-pointer transition-all duration-200"
+                  className="cursor-pointer transition-all duration-300"
                   style={{
                     opacity: selectedBar === i ? 1 : 0.85,
-                    filter: selectedBar === i ? 'drop-shadow(0 2px 8px #FF6B35AA)' : 'none',
+                    filter: selectedBar === i ? 'drop-shadow(0 4px 12px #FF6B35AA)' : 'none',
+                    transform: selectedBar === i ? 'scale(1.02)' : 'scale(1)',
+                    transformOrigin: 'bottom center',
                   }}
                   onClick={() => setSelectedBar(i)}
                 />
                 {/* Payment bar */}
                 <rect
-                  x={i * 80 + 66}
+                  x={xPos + barWidth + 4}
                   y={chartHeight - paymentBarHeight + 20}
-                  width={14}
+                  width={paymentBarWidth}
                   height={paymentBarHeight}
                   rx={6}
                   fill={paymentColor}
-                  className="cursor-pointer transition-all duration-200"
+                  className="cursor-pointer transition-all duration-300"
                   style={{
                     opacity: selectedBar === i ? 1 : 0.85,
-                    filter: selectedBar === i ? 'drop-shadow(0 2px 8px #C85000AA)' : 'none',
+                    filter: selectedBar === i ? 'drop-shadow(0 4px 12px #C85000AA)' : 'none',
                   }}
                   onClick={() => setSelectedBar(i)}
                 />
-                {/* Day label */}
+                {/* Label */}
                 <text
-                  x={i * 80 + 46}
-                  y={chartHeight + 40}
-                  fontSize="15"
-                  fill="#888"
+                  x={xPos + (barWidth + paymentBarWidth) / 2}
+                  y={chartHeight + 45}
+                  fontSize="14"
+                  fill="#666"
                   textAnchor="middle"
-                  fontWeight="bold"
+                  fontWeight="600"
                 >
-                  {d.day}
+                  {d.label}
                 </text>
               </g>
             );
           })}
           {/* X axis line */}
           <line
-            x1={20}
+            x1={40}
             y1={chartHeight + 20}
-            x2={chartData.length * 80}
+            x2={chartData.length * barSpacing + 30}
             y2={chartHeight + 20}
-            stroke="#eee"
+            stroke="#e5e5e5"
             strokeWidth={2}
           />
         </svg>
       </div>
+
       {/* Legend */}
       <div className="flex items-center gap-6 mt-6 mb-2">
         <div className="flex items-center gap-2">
@@ -256,29 +303,31 @@ function InteractiveBarChart() {
           <span className="text-sm text-gray-700 font-medium">Payment (10%)</span>
         </div>
       </div>
+
       {/* Info for selected bar */}
       {selectedBar !== null && (
-        <div className="mt-4 bg-white rounded-xl shadow-xl p-5 border border-gray-200 flex flex-col items-center animate-fade-in">
+        <div className="mt-4 bg-white rounded-xl shadow-xl p-6 border border-gray-200 flex flex-col items-center animate-fade-in min-w-[280px]">
+          <div className="text-sm font-semibold text-gray-500 mb-3">{chartData[selectedBar].label}</div>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-3 h-3 rounded-full bg-[#FF6B35]"></div>
             <span className="text-sm text-gray-600">Sales:</span>
-            <span className="text-xl font-bold text-gray-900">${chartData[selectedBar].sales.toLocaleString()}</span>
+            <span className="text-2xl font-bold text-gray-900">${chartData[selectedBar].sales.toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-3 h-3 rounded-full bg-[#C85000]"></div>
             <span className="text-sm text-gray-600">Payment:</span>
-            <span className="text-xl font-bold text-[#C85000]">${chartData[selectedBar].payment.toLocaleString()}</span>
+            <span className="text-2xl font-bold text-[#C85000]">${chartData[selectedBar].payment.toLocaleString()}</span>
           </div>
-          <div className="text-xs text-gray-400 mt-1">10% of daily sales</div>
+          <div className="text-xs text-gray-400 mt-1">10% of {viewMode === 'daily' ? 'daily' : 'weekly'} sales</div>
           <button
-            className="mt-3 px-4 py-2 rounded bg-[#FF6B35] text-white font-semibold text-sm hover:bg-[#C85000] transition"
+            className="mt-4 px-5 py-2 rounded-full bg-[#FF6B35] text-white font-semibold text-sm hover:bg-[#C85000] transition"
             onClick={() => setSelectedBar(null)}
           >
             Close
           </button>
         </div>
       )}
-      <div className="text-xs text-gray-400 mt-2">Click a bar to see details</div>
+      <div className="text-xs text-gray-400 mt-3">Click a bar to see details</div>
     </div>
   );
 }
