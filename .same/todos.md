@@ -6,6 +6,14 @@
 - **NEVER EVER touch Highline Funding project!!!**
 - **Phone**: (617) 533-3190
 - **LOGO FILE**: toast-capital-logo.png must be the Toast Capital logo (toast icon + CAPITAL text), NOT Highline!
+- **PRIMARY ORANGE**: #FF6B35 - ALL orange must match this exactly!
+- **BRAND IDENTITY**: Toast Capital is COMPLETELY SEPARATE from Highline Funding. Different logos, different colors, different sites.
+
+## Brand Guidelines - Toast Capital
+- Primary Orange: #FF6B35
+- Blue buttons: #1E3A8A
+- Yellow banner: #FFB800
+- Logo: toast-capital-logo.png (orange toast icon + "capital" text)
 
 ## Completed
 - [x] New logo saved (toast-capital-logo.png)
@@ -29,6 +37,9 @@
 - [x] Added social media icons (TikTok, Instagram, Facebook, LinkedIn, YouTube)
 - [x] Added App Store and Google Play badges
 - [x] Added region selector and bottom legal links row
+- [x] Swapped images for 2nd and 3rd testimonials on home page
+- [x] Updated yellow banner text: "Toast POS Merchant? Check your pre-qualification for funding in minutes."
+- [x] Standardized ALL orange colors to #FF6B35 (removed #FF8C42, #FF8F5C variations)
 
 ## Pending
-- [x] Deploy to toastcap.com - Changes pushed to GitHub, Netlify auto-deploys from repo
+- None - site is live at toastcap.com

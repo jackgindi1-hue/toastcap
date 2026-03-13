@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Toast bread slice outline - matches Toast Capital logo style -->
+  <path
+    d="M7 11C7 6.58172 10.5817 3 15 3H17C21.4183 3 25 6.58172 25 11V27C25 28.1046 24.1046 29 23 29H9C7.89543 29 7 28.1046 7 27V11Z"
+    stroke="#FF6B35"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+</svg>
