@@ -138,6 +138,151 @@ const businessTypes = [
   }
 ];
 
+// Interactive Bar Chart Component
+function InteractiveBarChart() {
+  // Example data for 7 days
+  const chartData = [
+    { day: 'Mon', sales: 4200, payment: 420 },
+    { day: 'Tue', sales: 5100, payment: 510 },
+    { day: 'Wed', sales: 3800, payment: 380 },
+    { day: 'Thu', sales: 6100, payment: 610 },
+    { day: 'Fri', sales: 7200, payment: 720 },
+    { day: 'Sat', sales: 8900, payment: 890 },
+    { day: 'Sun', sales: 5400, payment: 540 },
+  ];
+
+  // Find max for scaling
+  const maxSales = Math.max(...chartData.map(d => d.sales));
+  // 20% larger: scale height
+  const chartHeight = 360; // px (was 300)
+
+  const [selectedBar, setSelectedBar] = useState<number | null>(null);
+
+  // Colors
+  const salesColor = '#FF6B35';
+  const paymentColor = '#C85000'; // darker orange
+
+  return (
+    <div className="max-w-4xl mx-auto flex flex-col items-center">
+      <div className="w-full overflow-x-auto">
+        <svg
+          width="100%"
+          height={chartHeight + 60}
+          viewBox={`0 0 ${chartData.length * 80} ${chartHeight + 60}`}
+          className="mx-auto"
+        >
+          {/* Y axis labels */}
+          {[0, 0.25, 0.5, 0.75, 1].map((t, i) => (
+            <text
+              key={i}
+              x={0}
+              y={chartHeight - t * chartHeight + 20}
+              fontSize="13"
+              fill="#bbb"
+              textAnchor="start"
+            >
+              ${Math.round(maxSales * t)}
+            </text>
+          ))}
+          {/* Bars */}
+          {chartData.map((d, i) => {
+            const salesBarHeight = (d.sales / maxSales) * chartHeight;
+            const paymentBarHeight = (d.payment / maxSales) * chartHeight;
+            return (
+              <g key={i}>
+                {/* Sales bar */}
+                <rect
+                  x={i * 80 + 30}
+                  y={chartHeight - salesBarHeight + 20}
+                  width={32}
+                  height={salesBarHeight}
+                  rx={8}
+                  fill={salesColor}
+                  className="cursor-pointer transition-all duration-200"
+                  style={{
+                    opacity: selectedBar === i ? 1 : 0.85,
+                    filter: selectedBar === i ? 'drop-shadow(0 2px 8px #FF6B35AA)' : 'none',
+                  }}
+                  onClick={() => setSelectedBar(i)}
+                />
+                {/* Payment bar */}
+                <rect
+                  x={i * 80 + 66}
+                  y={chartHeight - paymentBarHeight + 20}
+                  width={14}
+                  height={paymentBarHeight}
+                  rx={6}
+                  fill={paymentColor}
+                  className="cursor-pointer transition-all duration-200"
+                  style={{
+                    opacity: selectedBar === i ? 1 : 0.85,
+                    filter: selectedBar === i ? 'drop-shadow(0 2px 8px #C85000AA)' : 'none',
+                  }}
+                  onClick={() => setSelectedBar(i)}
+                />
+                {/* Day label */}
+                <text
+                  x={i * 80 + 46}
+                  y={chartHeight + 40}
+                  fontSize="15"
+                  fill="#888"
+                  textAnchor="middle"
+                  fontWeight="bold"
+                >
+                  {d.day}
+                </text>
+              </g>
+            );
+          })}
+          {/* X axis line */}
+          <line
+            x1={20}
+            y1={chartHeight + 20}
+            x2={chartData.length * 80}
+            y2={chartHeight + 20}
+            stroke="#eee"
+            strokeWidth={2}
+          />
+        </svg>
+      </div>
+      {/* Legend */}
+      <div className="flex items-center gap-6 mt-6 mb-2">
+        <div className="flex items-center gap-2">
+          <span className="w-4 h-4 rounded bg-[#FF6B35] inline-block"></span>
+          <span className="text-sm text-gray-700 font-medium">Sales</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-4 h-4 rounded bg-[#C85000] inline-block"></span>
+          <span className="text-sm text-gray-700 font-medium">Payment (10%)</span>
+        </div>
+      </div>
+      {/* Info for selected bar */}
+      {selectedBar !== null && (
+        <div className="mt-4 bg-white rounded-xl shadow-xl p-5 border border-gray-200 flex flex-col items-center animate-fade-in">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-3 h-3 rounded-full bg-[#FF6B35]"></div>
+            <span className="text-sm text-gray-600">Sales:</span>
+            <span className="text-xl font-bold text-gray-900">${chartData[selectedBar].sales.toLocaleString()}</span>
+          </div>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-3 h-3 rounded-full bg-[#C85000]"></div>
+            <span className="text-sm text-gray-600">Payment:</span>
+            <span className="text-xl font-bold text-[#C85000]">${chartData[selectedBar].payment.toLocaleString()}</span>
+          </div>
+          <div className="text-xs text-gray-400 mt-1">10% of daily sales</div>
+          <button
+            className="mt-3 px-4 py-2 rounded bg-[#FF6B35] text-white font-semibold text-sm hover:bg-[#C85000] transition"
+            onClick={() => setSelectedBar(null)}
+          >
+            Close
+          </button>
+        </div>
+      )}
+      <div className="text-xs text-gray-400 mt-2">Click a bar to see details</div>
+    </div>
+  );
+}
+
 export default function Home() {
   const router = useRouter();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -868,31 +1013,7 @@ export default function Home() {
             In our industry, unpredictability is, well, predictable. That's why Toast Capital Loan repayment flexes with your cash flow. Choose daily or weekly payments - on days when your sales are higher, you'll pay more than on days your sales are lower.
           </p>
 
-          <div className="max-w-4xl mx-auto relative">
-            <Image
-              src="https://ext.same-assets.com/2820641348/1970146212.avif"
-              alt="Flexible daily or weekly repayment chart"
-              width={800}
-              height={400}
-              className="w-full h-auto"
-            />
-            {/* Animated Sales/Payments Overlay */}
-            <div className="absolute top-8 right-8 bg-white rounded-xl shadow-xl p-5 border border-gray-200 chart-overlay-animate">
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-[#FF6B35]"></div>
-                  <span className="text-sm text-gray-600">Sales:</span>
-                  <span className="text-xl font-bold text-gray-900">$5,890</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-[#1E3A8A]"></div>
-                  <span className="text-sm text-gray-600">Payment:</span>
-                  <span className="text-xl font-bold text-[#1E3A8A]">$589</span>
-                </div>
-                <div className="text-xs text-gray-400 mt-1">10% of daily sales</div>
-              </div>
-            </div>
-          </div>
+          <InteractiveBarChart />
         </div>
       </section>
 

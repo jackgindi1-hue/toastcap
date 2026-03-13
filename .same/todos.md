@@ -40,6 +40,10 @@
 - [x] Swapped images for 2nd and 3rd testimonials on home page
 - [x] Updated yellow banner text: "Toast POS Merchant? Check your pre-qualification for funding in minutes."
 - [x] Standardized ALL orange colors to #FF6B35 (removed #FF8C42, #FF8F5C variations)
+- [x] Added Toast Capital favicon (toast icon in orange #FF6B35)
+- [x] Updated site title: "Toast Capital | Fast & Flexible Business Funding"
+- [x] Added SEO meta description
+- [x] Added OpenGraph metadata for social sharing
 
 ## Pending
 - None - site is live at toastcap.com
