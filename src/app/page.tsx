@@ -143,15 +143,15 @@ function InteractiveBarChart() {
   const [viewMode, setViewMode] = useState<'daily' | 'weekly'>('daily');
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
 
-  // Daily data - 7 days
+  // Daily data - 7 days (matching original Toast chart style)
   const dailyData = [
-    { label: 'Mon', sales: 4200, payment: 420 },
-    { label: 'Tue', sales: 5100, payment: 510 },
-    { label: 'Wed', sales: 3800, payment: 380 },
-    { label: 'Thu', sales: 6100, payment: 610 },
-    { label: 'Fri', sales: 7200, payment: 720 },
-    { label: 'Sat', sales: 8900, payment: 890 },
-    { label: 'Sun', sales: 5400, payment: 540 },
+    { label: 'Sunday', sales: 3850, payment: 385 },
+    { label: 'Monday', sales: 3550, payment: 355 },
+    { label: 'Tuesday', sales: 3590, payment: 359 },
+    { label: 'Wednesday', sales: 4280, payment: 428 },
+    { label: 'Thursday', sales: 5220, payment: 522 },
+    { label: 'Friday', sales: 5890, payment: 589 },
+    { label: 'Saturday', sales: 6200, payment: 620 },
   ];
 
   // Weekly data - 4 weeks
@@ -163,18 +163,7 @@ function InteractiveBarChart() {
   ];
 
   const chartData = viewMode === 'daily' ? dailyData : weeklyData;
-
-  // Find max for scaling
   const maxSales = Math.max(...chartData.map(d => d.sales));
-  // 20% larger: scale height
-  const chartHeight = 360;
-  const barWidth = viewMode === 'daily' ? 32 : 48;
-  const paymentBarWidth = viewMode === 'daily' ? 14 : 20;
-  const barSpacing = viewMode === 'daily' ? 80 : 120;
-
-  // Colors
-  const salesColor = '#FF6B35';
-  const paymentColor = '#C85000';
 
   // Reset selection when view mode changes
   useEffect(() => {
@@ -184,7 +173,7 @@ function InteractiveBarChart() {
   return (
     <div className="max-w-5xl mx-auto flex flex-col items-center">
       {/* Toggle Switch */}
-      <div className="flex items-center gap-2 mb-8 bg-gray-100 p-1 rounded-full">
+      <div className="flex items-center gap-2 mb-8 bg-gray-100 p-1.5 rounded-full">
         <button
           onClick={() => setViewMode('daily')}
           className={`px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 ${
@@ -207,127 +196,103 @@ function InteractiveBarChart() {
         </button>
       </div>
 
-      <div className="w-full overflow-x-auto">
-        <svg
-          width="100%"
-          height={chartHeight + 60}
-          viewBox={`0 0 ${chartData.length * barSpacing + 40} ${chartHeight + 60}`}
-          className="mx-auto"
-        >
-          {/* Y axis labels */}
-          {[0, 0.25, 0.5, 0.75, 1].map((t, i) => (
-            <text
-              key={i}
-              x={5}
-              y={chartHeight - t * chartHeight + 20}
-              fontSize="12"
-              fill="#bbb"
-              textAnchor="start"
-            >
-              ${(Math.round(maxSales * t) / 1000).toFixed(0)}k
-            </text>
-          ))}
-          {/* Bars */}
+      {/* Chart Container - Toast Style */}
+      <div className="w-full max-w-4xl bg-white rounded-2xl p-6 md:p-8">
+        {/* Bars Container */}
+        <div className="flex items-end justify-between gap-2 md:gap-4 h-[280px] md:h-[340px] mb-4">
           {chartData.map((d, i) => {
-            const salesBarHeight = (d.sales / maxSales) * chartHeight;
-            const paymentBarHeight = (d.payment / maxSales) * chartHeight;
-            const xPos = i * barSpacing + 50;
+            const heightPercent = (d.sales / maxSales) * 100;
+            const isSelected = selectedBar === i;
             return (
-              <g key={i}>
-                {/* Sales bar */}
-                <rect
-                  x={xPos}
-                  y={chartHeight - salesBarHeight + 20}
-                  width={barWidth}
-                  height={salesBarHeight}
-                  rx={8}
-                  fill={salesColor}
-                  className="cursor-pointer transition-all duration-300"
-                  style={{
-                    opacity: selectedBar === i ? 1 : 0.85,
-                    filter: selectedBar === i ? 'drop-shadow(0 4px 12px #FF6B35AA)' : 'none',
-                    transform: selectedBar === i ? 'scale(1.02)' : 'scale(1)',
-                    transformOrigin: 'bottom center',
-                  }}
-                  onClick={() => setSelectedBar(i)}
-                />
-                {/* Payment bar */}
-                <rect
-                  x={xPos + barWidth + 4}
-                  y={chartHeight - paymentBarHeight + 20}
-                  width={paymentBarWidth}
-                  height={paymentBarHeight}
-                  rx={6}
-                  fill={paymentColor}
-                  className="cursor-pointer transition-all duration-300"
-                  style={{
-                    opacity: selectedBar === i ? 1 : 0.85,
-                    filter: selectedBar === i ? 'drop-shadow(0 4px 12px #C85000AA)' : 'none',
-                  }}
-                  onClick={() => setSelectedBar(i)}
-                />
-                {/* Label */}
-                <text
-                  x={xPos + (barWidth + paymentBarWidth) / 2}
-                  y={chartHeight + 45}
-                  fontSize="14"
-                  fill="#666"
-                  textAnchor="middle"
-                  fontWeight="600"
-                >
-                  {d.label}
-                </text>
-              </g>
+              <div
+                key={i}
+                className="flex-1 flex flex-col items-center cursor-pointer group"
+                onClick={() => setSelectedBar(isSelected ? null : i)}
+              >
+                {/* Bar wrapper */}
+                <div className="w-full flex items-end justify-center gap-1 h-full">
+                  {/* Sales bar - peach/coral color like Toast */}
+                  <div
+                    className={`relative rounded-t-lg transition-all duration-300 ${
+                      isSelected ? 'shadow-lg' : 'group-hover:opacity-90'
+                    }`}
+                    style={{
+                      width: viewMode === 'daily' ? '70%' : '65%',
+                      height: `${heightPercent}%`,
+                      background: isSelected
+                        ? 'linear-gradient(180deg, #FF8F6B 0%, #FF6B35 100%)'
+                        : 'linear-gradient(180deg, #FFB49A 0%, #FF9B7A 100%)',
+                      boxShadow: isSelected ? '0 4px 20px rgba(255, 107, 53, 0.4)' : 'none',
+                    }}
+                  >
+                    {/* Plus icon on bar */}
+                    <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#FF6B35] flex items-center justify-center text-white text-sm font-bold transition-opacity ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                      +
+                    </div>
+                  </div>
+                  {/* Payment bar - darker coral */}
+                  <div
+                    className="rounded-t-lg transition-all duration-300"
+                    style={{
+                      width: viewMode === 'daily' ? '25%' : '30%',
+                      height: `${(d.payment / maxSales) * 100}%`,
+                      background: isSelected
+                        ? 'linear-gradient(180deg, #E85A30 0%, #C84520 100%)'
+                        : 'linear-gradient(180deg, #FF7A50 0%, #E86840 100%)',
+                    }}
+                  />
+                </div>
+              </div>
             );
           })}
-          {/* X axis line */}
-          <line
-            x1={40}
-            y1={chartHeight + 20}
-            x2={chartData.length * barSpacing + 30}
-            y2={chartHeight + 20}
-            stroke="#e5e5e5"
-            strokeWidth={2}
-          />
-        </svg>
+        </div>
+
+        {/* Day Labels */}
+        <div className="flex justify-between gap-2 md:gap-4 border-t border-gray-200 pt-4">
+          {chartData.map((d, i) => (
+            <div
+              key={i}
+              className={`flex-1 text-center text-xs md:text-sm font-medium transition-colors ${
+                selectedBar === i ? 'text-[#FF6B35]' : 'text-gray-500'
+              }`}
+            >
+              {viewMode === 'daily' ? d.label.slice(0, 3) : d.label}
+            </div>
+          ))}
+        </div>
+
+        {/* Legend */}
+        <div className="flex items-center justify-center gap-6 mt-6">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded" style={{ background: 'linear-gradient(180deg, #FFB49A 0%, #FF9B7A 100%)' }}></div>
+            <span className="text-sm text-gray-600">Daily Card Sales</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded" style={{ background: 'linear-gradient(180deg, #FF7A50 0%, #E86840 100%)' }}></div>
+            <span className="text-sm text-gray-600">Daily Loan Repayment</span>
+          </div>
+        </div>
       </div>
 
-      {/* Legend */}
-      <div className="flex items-center gap-6 mt-6 mb-2">
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 rounded bg-[#FF6B35] inline-block"></span>
-          <span className="text-sm text-gray-700 font-medium">Sales</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 rounded bg-[#C85000] inline-block"></span>
-          <span className="text-sm text-gray-700 font-medium">Payment (10%)</span>
-        </div>
-      </div>
-
-      {/* Info for selected bar */}
+      {/* Info popup for selected bar */}
       {selectedBar !== null && (
-        <div className="mt-4 bg-white rounded-xl shadow-xl p-6 border border-gray-200 flex flex-col items-center animate-fade-in min-w-[280px]">
-          <div className="text-sm font-semibold text-gray-500 mb-3">{chartData[selectedBar].label}</div>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-3 h-3 rounded-full bg-[#FF6B35]"></div>
-            <span className="text-sm text-gray-600">Sales:</span>
+        <div className="mt-6 bg-white rounded-2xl shadow-2xl p-6 border border-gray-100 flex flex-col items-center animate-fade-in min-w-[300px]">
+          <div className="text-lg font-bold text-gray-900 mb-4">{chartData[selectedBar].label}</div>
+          <div className="flex items-center gap-4 mb-3">
+            <div className="w-4 h-4 rounded" style={{ background: 'linear-gradient(180deg, #FFB49A 0%, #FF9B7A 100%)' }}></div>
+            <span className="text-gray-600">Sales:</span>
             <span className="text-2xl font-bold text-gray-900">${chartData[selectedBar].sales.toLocaleString()}</span>
           </div>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-3 h-3 rounded-full bg-[#C85000]"></div>
-            <span className="text-sm text-gray-600">Payment:</span>
-            <span className="text-2xl font-bold text-[#C85000]">${chartData[selectedBar].payment.toLocaleString()}</span>
+          <div className="flex items-center gap-4 mb-3">
+            <div className="w-4 h-4 rounded" style={{ background: 'linear-gradient(180deg, #FF7A50 0%, #E86840 100%)' }}></div>
+            <span className="text-gray-600">Payment:</span>
+            <span className="text-2xl font-bold text-[#E86840]">${chartData[selectedBar].payment.toLocaleString()}</span>
           </div>
-          <div className="text-xs text-gray-400 mt-1">10% of {viewMode === 'daily' ? 'daily' : 'weekly'} sales</div>
-          <button
-            className="mt-4 px-5 py-2 rounded-full bg-[#FF6B35] text-white font-semibold text-sm hover:bg-[#C85000] transition"
-            onClick={() => setSelectedBar(null)}
-          >
-            Close
-          </button>
+          <div className="text-sm text-gray-400 mt-2">10% of {viewMode === 'daily' ? 'daily' : 'weekly'} sales</div>
         </div>
       )}
-      <div className="text-xs text-gray-400 mt-3">Click a bar to see details</div>
+
+      <p className="text-sm text-gray-400 mt-4">Click any bar to see details</p>
     </div>
   );
 }
