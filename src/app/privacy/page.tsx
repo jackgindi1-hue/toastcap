@@ -18,7 +18,7 @@ export default function PrivacyPage() {
             <div className="hidden md:flex flex-col items-end">
               <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
               <a href="tel:617-533-3190" className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <Phone className="w-5 h-5 text-[#FF6B35]" />
                 <span className="font-bold text-lg">617-533-3190</span>
               </a>
             </div>
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
       <div className="flex-grow bg-gray-50 px-4 py-8 md:py-12">
         <div className="max-w-4xl mx-auto">
           {/* Back Link */}
-          <Link href="/" className="inline-flex items-center gap-2 text-[#FF8C42] hover:underline mb-6">
+          <Link href="/" className="inline-flex items-center gap-2 text-[#FF6B35] hover:underline mb-6">
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </Link>
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
                 <div className="bg-white p-4 rounded-lg border border-blue-200">
                   <h3 className="font-bold text-gray-900 mb-2">Opt-Out Instructions:</h3>
                   <p className="text-sm">
-                    You can opt out of SMS messages at any time by replying <strong>STOP</strong> to any message you receive from us. You may also contact us at <a href="tel:617-533-3190" className="text-[#FF8C42] font-semibold">617-533-3190</a> or <a href="mailto:info@toastcapital.com" className="text-[#FF8C42] font-semibold">info@toastcapital.com</a> to opt out.
+                    You can opt out of SMS messages at any time by replying <strong>STOP</strong> to any message you receive from us. You may also contact us at <a href="tel:617-533-3190" className="text-[#FF6B35] font-semibold">617-533-3190</a> or <a href="mailto:info@toastcapital.com" className="text-[#FF6B35] font-semibold">info@toastcapital.com</a> to opt out.
                   </p>
                 </div>
 
@@ -82,7 +82,7 @@ export default function PrivacyPage() {
                 <div className="bg-white p-4 rounded-lg border border-blue-200">
                   <h3 className="font-bold text-gray-900 mb-2">Help:</h3>
                   <p className="text-sm">
-                    For help, reply <strong>HELP</strong> to any message or contact us at <a href="tel:617-533-3190" className="text-[#FF8C42] font-semibold">617-533-3190</a>.
+                    For help, reply <strong>HELP</strong> to any message or contact us at <a href="tel:617-533-3190" className="text-[#FF6B35] font-semibold">617-533-3190</a>.
                   </p>
                 </div>
 
@@ -175,10 +175,10 @@ export default function PrivacyPage() {
                   <p>333 Summer Street</p>
                   <p>Boston, MA 02210</p>
                   <p className="mt-2">
-                    <strong>Phone:</strong> <a href="tel:617-533-3190" className="text-[#FF8C42]">617-533-3190</a>
+                    <strong>Phone:</strong> <a href="tel:617-533-3190" className="text-[#FF6B35]">617-533-3190</a>
                   </p>
                   <p>
-                    <strong>Email:</strong> <a href="mailto:info@toastcapital.com" className="text-[#FF8C42]">info@toastcapital.com</a>
+                    <strong>Email:</strong> <a href="mailto:info@toastcapital.com" className="text-[#FF6B35]">info@toastcapital.com</a>
                   </p>
                 </div>
               </div>

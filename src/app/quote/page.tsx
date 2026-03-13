@@ -115,7 +115,7 @@ export default function QuotePage() {
     <div className="min-h-screen bg-white">
       {/* Yellow Banner */}
       <div className="bg-[#FFB800] text-black py-2 px-4 text-center">
-        <span className="text-sm md:text-base font-semibold">Already a Toast POS Customer? You're pre-approved! Funding in as little as 24 hours</span>
+        <span className="text-sm md:text-base font-semibold">Toast POS Merchant? Check your pre-qualification for funding in minutes.</span>
       </div>
 
       {/* Header - reduced padding and smaller logo */}
@@ -128,7 +128,7 @@ export default function QuotePage() {
             <div className="hidden md:flex flex-col items-end">
               <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
               <a href="tel:617-533-3190" className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <Phone className="w-5 h-5 text-[#FF6B35]" />
                 <span className="font-bold text-lg">617-533-3190</span>
               </a>
             </div>
@@ -137,7 +137,7 @@ export default function QuotePage() {
       </header>
 
       {/* Mobile Sticky Footer - Phone */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FF8C42] shadow-lg">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FF6B35] shadow-lg">
         <a href="tel:617-533-3190" className="flex items-center justify-center gap-3 py-3 px-6">
           <Phone className="w-5 h-5 text-white" />
           <span className="text-white font-bold">Call: 617-533-3190</span>

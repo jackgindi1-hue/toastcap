@@ -240,7 +240,7 @@ export default function UploadPage() {
     <div className="min-h-screen bg-white flex flex-col">
       {/* Yellow Banner */}
       <div className="bg-[#FFB800] text-black py-2 px-4 text-center">
-        <span className="text-sm md:text-base font-semibold">Already a Toast POS Customer? You're pre-approved! Funding in as little as 24 hours</span>
+        <span className="text-sm md:text-base font-semibold">Toast POS Merchant? Check your pre-qualification for funding in minutes.</span>
       </div>
 
       {/* Header - reduced padding */}
@@ -253,7 +253,7 @@ export default function UploadPage() {
             <div className="hidden md:flex flex-col items-end">
               <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
               <a href="tel:617-533-3190" className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <Phone className="w-5 h-5 text-[#FF6B35]" />
                 <span className="font-bold text-lg">617-533-3190</span>
               </a>
             </div>
@@ -262,7 +262,7 @@ export default function UploadPage() {
       </header>
 
       {/* Mobile Sticky Footer - Phone */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FF8C42] shadow-lg">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FF6B35] shadow-lg">
         <a href="tel:617-533-3190" className="flex items-center justify-center gap-3 py-3 px-6">
           <Phone className="w-5 h-5 text-white" />
           <span className="text-white font-bold">Call: 617-533-3190</span>
@@ -307,7 +307,7 @@ export default function UploadPage() {
           {/* DocuSign Section */}
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#FF8C42] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">
                 1
               </div>
               <div>
@@ -323,7 +323,7 @@ export default function UploadPage() {
               {/* Loading Overlay */}
               {docusignLoading && !docusignError && (
                 <div className="absolute inset-0 bg-white/95 flex flex-col items-center justify-center z-10 min-h-[400px]">
-                  <Loader2 className="w-12 h-12 text-[#FF8C42] animate-spin mb-4" />
+                  <Loader2 className="w-12 h-12 text-[#FF6B35] animate-spin mb-4" />
                   <p className="text-lg font-semibold text-gray-900 mb-2">Loading Owner & Business Verification...</p>
                   <p className="text-sm text-gray-600 text-center max-w-md px-4">
                     Please wait while we load the secure form. No impact to your credit score.
@@ -343,7 +343,7 @@ export default function UploadPage() {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
                       onClick={retryDocusign}
-                      className="flex items-center justify-center gap-2 bg-[#FF8C42] hover:bg-[#FF7028] text-white font-semibold py-3 px-6 rounded-full transition-all"
+                      className="flex items-center justify-center gap-2 bg-[#FF6B35] hover:bg-[#FF7028] text-white font-semibold py-3 px-6 rounded-full transition-all"
                     >
                       <RefreshCw className="w-5 h-5" />
                       Try Again
@@ -390,7 +390,7 @@ export default function UploadPage() {
                 href={DOCUSIGN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[#FF8C42] hover:text-[#FF7028] font-medium text-sm"
+                className="inline-flex items-center gap-1 text-[#FF6B35] hover:text-[#FF7028] font-medium text-sm"
               >
                 <ExternalLink className="w-4 h-4" />
                 Click here to open verification in a new window
@@ -403,7 +403,7 @@ export default function UploadPage() {
             <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-[#FF8C42] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">
                     2
                   </div>
                   <div>
@@ -543,7 +543,7 @@ export default function UploadPage() {
               {/* Contact Information */}
               <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-[#FF8C42]" />
+                  <Mail className="w-5 h-5 text-[#FF6B35]" />
                   Your Contact Information
                 </h3>
                 <p className="text-sm text-gray-600 mb-4">We'll send your funding updates and documents to this email.</p>
@@ -561,7 +561,7 @@ export default function UploadPage() {
                         value={contactFirstName}
                         onChange={(e) => setContactFirstName(e.target.value)}
                         placeholder="John"
-                        className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF8C42] transition-all border-gray-300 bg-white"
+                        className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] transition-all border-gray-300 bg-white"
                       />
                     </div>
                   )}
@@ -578,7 +578,7 @@ export default function UploadPage() {
                         value={contactLastName}
                         onChange={(e) => setContactLastName(e.target.value)}
                         placeholder="Smith"
-                        className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF8C42] transition-all border-gray-300 bg-white"
+                        className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] transition-all border-gray-300 bg-white"
                       />
                     </div>
                   )}
@@ -597,7 +597,7 @@ export default function UploadPage() {
                         if (errors.contactEmail) setErrors(prev => ({ ...prev, contactEmail: '' }));
                       }}
                       placeholder="your@email.com"
-                      className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF8C42] transition-all ${
+                      className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] transition-all ${
                         errors.contactEmail ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'
                       }`}
                     />
@@ -620,7 +620,7 @@ export default function UploadPage() {
                         if (errors.contactPhone) setErrors(prev => ({ ...prev, contactPhone: '' }));
                       }}
                       placeholder="(555) 123-4567"
-                      className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF8C42] transition-all ${
+                      className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] transition-all ${
                         errors.contactPhone ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'
                       }`}
                     />
@@ -671,7 +671,7 @@ export default function UploadPage() {
           {/* Step 3: Get Funded */}
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#FF8C42] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">
                 3
               </div>
               <div>

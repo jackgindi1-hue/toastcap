@@ -23,6 +23,12 @@
 - [x] Added "Questions? Call Us! Live agents standing by" text above phone number in header
 - [x] Embedded actual YouTube video (https://www.youtube.com/watch?v=AK4m7m-r7mY) instead of fake play button image
 - [x] Updated all pages with consistent header styling (smaller logo + call text)
+- [x] NEW FOOTER - Copied Toast-style footer from pos.toasttab.com
+- [x] Created reusable Footer component with multi-column layout
+- [x] Added Customers, Resources, Products, Company link columns
+- [x] Added social media icons (TikTok, Instagram, Facebook, LinkedIn, YouTube)
+- [x] Added App Store and Google Play badges
+- [x] Added region selector and bottom legal links row
 
 ## Pending
 - [x] Deploy to toastcap.com - Changes pushed to GitHub, Netlify auto-deploys from repo

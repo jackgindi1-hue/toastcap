@@ -27,7 +27,7 @@ function ThankYouDLVCContent() {
             <div className="hidden md:flex flex-col items-end">
               <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
               <a href="tel:617-533-3190" className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <Phone className="w-5 h-5 text-[#FF6B35]" />
                 <span className="font-bold text-lg">617-533-3190</span>
               </a>
             </div>
@@ -118,7 +118,7 @@ function ThankYouDLVCContent() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3 bg-yellow-50 rounded-lg p-3 shadow-sm border-2 border-yellow-400">
-                    <div className="w-7 h-7 bg-[#FF8C42] rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 animate-pulse">
+                    <div className="w-7 h-7 bg-[#FF6B35] rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 animate-pulse">
                       3
                     </div>
                     <div>
@@ -208,7 +208,7 @@ export default function ThankYouDLVCPage() {
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF8C42] mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6B35] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading...</p>
         </div>
       </div>

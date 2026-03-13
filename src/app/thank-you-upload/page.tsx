@@ -34,7 +34,7 @@ function ThankYouUploadContent() {
             <div className="hidden md:flex flex-col items-end">
               <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
               <a href="tel:617-533-3190" className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <Phone className="w-5 h-5 text-[#FF6B35]" />
                 <span className="font-bold text-lg">617-533-3190</span>
               </a>
             </div>
@@ -146,7 +146,7 @@ export default function ThankYouUploadPage() {
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF8C42] mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6B35] mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading...</p>
         </div>
       </div>

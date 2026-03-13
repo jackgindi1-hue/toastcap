@@ -33,13 +33,13 @@ const testimonials = [
     title: "Owner | Fat City Brew & BBQ"
   },
   {
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=400&fit=crop",
     quote: "Toast Capital made the funding process incredibly simple. We got approved in 24 hours and had the funds we needed to expand our second location. The flexible payments fit perfectly with our cash flow.",
     name: "Maria Santos",
     title: "Owner | Santos Family Restaurant"
   },
   {
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&h=400&fit=crop",
     quote: "What I love most is the weekly payment option. It works perfectly for our business model and there's no stress about missing payments. Plus the prepayment discount saved us thousands!",
     name: "James Mitchell",
     title: "Owner | The Corner Bistro"
@@ -327,7 +327,7 @@ export default function Home() {
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden">
           {/* Modal Header with Progress */}
-          <div className="bg-gradient-to-r from-[#FF6B35] to-[#FF8F5C] px-6 py-5">
+          <div className="bg-gradient-to-r from-[#FF6B35] to-[#FF6B35] px-6 py-5">
             <div className="flex items-center justify-between mb-3">
               <DialogTitle className="text-white text-xl font-bold">
                 {step === 1 ? 'Get Your Free Quote' : 'Tell Us About Yourself'}
@@ -624,7 +624,7 @@ export default function Home() {
 
       {/* Yellow Banner */}
       <div className="bg-[#FFB800] text-black py-2 px-4 text-center">
-        <span className="text-sm md:text-base font-semibold">Already a Toast POS Customer? You're pre-approved! Funding in as little as 24 hours</span>
+        <span className="text-sm md:text-base font-semibold">Toast POS Merchant? Check your pre-qualification for funding in minutes.</span>
       </div>
 
       {/* Header - reduced padding */}
@@ -637,7 +637,7 @@ export default function Home() {
             <div className="hidden md:flex flex-col items-end">
               <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
               <a href="tel:617-533-3190" className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <Phone className="w-5 h-5 text-[#FF6B35]" />
                 <span className="font-bold text-lg">617-533-3190</span>
               </a>
             </div>
@@ -652,7 +652,7 @@ export default function Home() {
       </header>
 
       {/* Mobile Sticky Footer - Phone */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FF8C42] shadow-lg">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#FF6B35] shadow-lg">
         <a href="tel:617-533-3190" className="flex items-center justify-center gap-3 py-3 px-6">
           <Phone className="w-5 h-5 text-white" />
           <span className="text-white font-bold">Call: 617-533-3190</span>

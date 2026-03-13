@@ -89,7 +89,7 @@ export default function DLVCPage() {
             <div className="hidden md:flex flex-col items-end">
               <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
               <a href="tel:617-533-3190" className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <Phone className="w-5 h-5 text-[#FF6B35]" />
                 <span className="font-bold text-lg">617-533-3190</span>
               </a>
             </div>
@@ -120,7 +120,7 @@ export default function DLVCPage() {
             {/* Driver's License Upload */}
             <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#FF8C42] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">1</div>
+                <div className="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">1</div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Complete Identity Verification</h2>
                   <p className="text-gray-600">(Driver&apos;s License Required)</p>
@@ -139,7 +139,7 @@ export default function DLVCPage() {
             {/* Void Check Upload */}
             <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#FF8C42] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">2</div>
+                <div className="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF7028] rounded-full flex items-center justify-center text-white font-bold text-xl">2</div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Upload a Void Check</h2>
                   <p className="text-gray-600">For your business (where you want the funds deposited)</p>
@@ -157,17 +157,17 @@ export default function DLVCPage() {
               {/* Contact Information */}
               <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-[#FF8C42]" />Your Contact Information
+                  <Mail className="w-5 h-5 text-[#FF6B35]" />Your Contact Information
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="contactEmail" className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
-                    <input type="email" id="contactEmail" value={contactEmail} onChange={(e) => { setContactEmail(e.target.value); if (errors.contactEmail) setErrors(prev => ({ ...prev, contactEmail: '' })); }} placeholder="your@email.com" className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF8C42] ${errors.contactEmail ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'}`} />
+                    <input type="email" id="contactEmail" value={contactEmail} onChange={(e) => { setContactEmail(e.target.value); if (errors.contactEmail) setErrors(prev => ({ ...prev, contactEmail: '' })); }} placeholder="your@email.com" className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] ${errors.contactEmail ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'}`} />
                     {errors.contactEmail && <p className="text-red-500 text-sm mt-1">{errors.contactEmail}</p>}
                   </div>
                   <div>
                     <label htmlFor="contactPhone" className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
-                    <input type="tel" id="contactPhone" value={contactPhone} onChange={(e) => { setContactPhone(e.target.value); if (errors.contactPhone) setErrors(prev => ({ ...prev, contactPhone: '' })); }} placeholder="(555) 123-4567" className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF8C42] ${errors.contactPhone ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'}`} />
+                    <input type="tel" id="contactPhone" value={contactPhone} onChange={(e) => { setContactPhone(e.target.value); if (errors.contactPhone) setErrors(prev => ({ ...prev, contactPhone: '' })); }} placeholder="(555) 123-4567" className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B35] ${errors.contactPhone ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-white'}`} />
                     {errors.contactPhone && <p className="text-red-500 text-sm mt-1">{errors.contactPhone}</p>}
                   </div>
                 </div>
