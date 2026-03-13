@@ -117,17 +117,20 @@ export default function QuotePage() {
         <span className="text-sm md:text-base font-semibold">Already a Toast POS Customer? You're pre-approved! Funding in as little as 24 hours</span>
       </div>
 
-      {/* Header - reduced padding */}
+      {/* Header - reduced padding and smaller logo */}
       <header className="bg-white border-b shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-1 flex items-center justify-between">
           <Link href="/" className="flex items-center">
-            <Image src="/toast-capital-logo.png" alt="Toast Capital Logo" width={560} height={160} className="object-contain w-[180px] h-auto md:w-[250px]" />
+            <Image src="/toast-capital-logo.png" alt="Toast Capital Logo" width={400} height={120} className="object-contain w-[140px] h-auto md:w-[180px]" />
           </Link>
           <div className="flex items-center gap-4">
-            <a href="tel:617-533-3190" className="hidden md:flex items-center gap-2">
-              <Phone className="w-5 h-5 text-[#FF8C42]" />
-              <span className="font-bold text-lg">617-533-3190</span>
-            </a>
+            <div className="hidden md:flex flex-col items-end">
+              <span className="text-sm text-gray-600 font-medium">Questions? Call Us! Live agents standing by</span>
+              <a href="tel:617-533-3190" className="flex items-center gap-2">
+                <Phone className="w-5 h-5 text-[#FF8C42]" />
+                <span className="font-bold text-lg">617-533-3190</span>
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -334,7 +337,7 @@ export default function QuotePage() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             {/* Logo and Links */}
             <div className="space-y-4">
-              <Image src="/toast-capital-logo.png" alt="Toast Capital Logo" width={560} height={160} className="object-contain w-[180px] h-auto md:w-[220px]" />
+              <Image src="/toast-capital-logo.png" alt="Toast Capital Logo" width={400} height={120} className="object-contain w-[140px] h-auto md:w-[160px]" />
               <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                 <a href="#" className="hover:text-[#FF8C42] transition">Terms & Conditions</a>
                 <span>|</span>
@@ -343,7 +346,6 @@ export default function QuotePage() {
                 <a href="#" className="hover:text-[#FF8C42] transition">Contact Us</a>
               </div>
             </div>
-            {/* Copyright */}
             <div className="text-sm text-gray-600">
               <p>&copy; 2025 Toast Capital. All rights reserved.</p>
             </div>

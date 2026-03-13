@@ -19,6 +19,10 @@
 - [x] Updated all pages: page.tsx, quote, upload, dlvc, docusign, privacy, thank-you-upload, thank-you-dlvc
 - [x] NEW LOGO - Updated Toast Capital logo (orange toast icon + black "capital" text)
 - [x] FIXED: Replaced wrong Highline logo with correct Toast Capital logo (committed 2026-03-13)
+- [x] Made logo SMALLER in header (140px mobile, 180px desktop)
+- [x] Added "Questions? Call Us! Live agents standing by" text above phone number in header
+- [x] Embedded actual YouTube video (https://www.youtube.com/watch?v=AK4m7m-r7mY) instead of fake play button image
+- [x] Updated all pages with consistent header styling (smaller logo + call text)
 
 ## Pending
-- [ ] None - site is live at toastcap.com
+- [ ] Deploy to toastcap.com
