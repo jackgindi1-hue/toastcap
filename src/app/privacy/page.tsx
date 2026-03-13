@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, ArrowLeft } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 export default function PrivacyPage() {
   return (
@@ -195,28 +196,7 @@ export default function PrivacyPage() {
         </div>
       </div>
 
-      {/* Footer - Simplified */}
-      <footer className="py-8 md:py-12 px-4 md:px-6 bg-white border-t mt-auto">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            {/* Logo and Links */}
-            <div className="space-y-4">
-              <Image src="/toast-capital-logo.png" alt="Toast Capital Logo" width={560} height={160} className="object-contain w-[180px] h-auto md:w-[220px]" />
-              <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                <a href="#" className="hover:text-[#FF8C42] transition">Terms & Conditions</a>
-                <span>|</span>
-                <Link href="/privacy" className="text-[#FF8C42] font-semibold">Privacy Policy</Link>
-                <span>|</span>
-                <a href="#" className="hover:text-[#FF8C42] transition">Contact Us</a>
-              </div>
-            </div>
-            {/* Copyright */}
-            <div className="text-sm text-gray-600">
-              <p>&copy; 2025 Toast Capital. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

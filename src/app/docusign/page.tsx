@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Lock, Clock } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 // DocuSign URL
 const DOCUSIGN_URL = "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=89764605-cb04-4695-9167-86dd1456c77a&env=na4&acct=c238cbb6-3f73-4721-9f47-2f0536de2c7a&v=2";
@@ -137,28 +138,7 @@ export default function DocuSignPage() {
         </div>
       </div>
 
-      {/* Footer - Simplified */}
-      <footer className="py-8 md:py-12 px-4 md:px-6 bg-white border-t mt-auto">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            {/* Logo and Links */}
-            <div className="space-y-4">
-              <Image src="/toast-capital-logo.png" alt="Toast Capital Logo" width={560} height={160} className="object-contain w-[180px] h-auto md:w-[220px]" />
-              <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                <a href="#" className="hover:text-[#FF8C42] transition">Terms & Conditions</a>
-                <span>|</span>
-                <Link href="/privacy" className="hover:text-[#FF8C42] transition">Privacy Policy</Link>
-                <span>|</span>
-                <a href="#" className="hover:text-[#FF8C42] transition">Contact Us</a>
-              </div>
-            </div>
-            {/* Copyright */}
-            <div className="text-sm text-gray-600">
-              <p>&copy; 2025 Toast Capital. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

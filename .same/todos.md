@@ -25,4 +25,4 @@
 - [x] Updated all pages with consistent header styling (smaller logo + call text)
 
 ## Pending
-- [ ] Deploy to toastcap.com
+- [x] Deploy to toastcap.com - Changes pushed to GitHub, Netlify auto-deploys from repo

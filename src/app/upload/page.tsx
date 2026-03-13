@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Upload, Check, Mail, Loader2, ExternalLink, AlertCircle, RefreshCw, ShieldCheck } from 'lucide-react';
 import ProgressTracker from '@/components/ProgressTracker';
+import Footer from '@/components/Footer';
 
 // Application steps for progress tracker
 const applicationSteps = [
@@ -726,28 +727,7 @@ export default function UploadPage() {
         </div>
       </div>
 
-      {/* Footer - Simplified */}
-      <footer className="py-8 md:py-12 px-4 md:px-6 bg-white border-t mt-auto">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            {/* Logo and Links */}
-            <div className="space-y-4">
-              <Image src="/toast-capital-logo.png" alt="Toast Capital Logo" width={400} height={120} className="object-contain w-[140px] h-auto md:w-[160px]" />
-              <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                <a href="#" className="hover:text-[#FF8C42] transition">Terms & Conditions</a>
-                <span>|</span>
-                <Link href="/privacy" className="hover:text-[#FF8C42] transition">Privacy Policy</Link>
-                <span>|</span>
-                <a href="#" className="hover:text-[#FF8C42] transition">Contact Us</a>
-              </div>
-            </div>
-            {/* Copyright */}
-            <div className="text-sm text-gray-600">
-              <p>&copy; 2025 Toast Capital. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <style jsx global>{`
         .phone-hover:hover .phone-ring {
