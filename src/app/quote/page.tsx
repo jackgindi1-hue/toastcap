@@ -114,18 +114,7 @@ export default function QuotePage() {
     <div className="min-h-screen bg-white">
       {/* Yellow Banner */}
       <div className="bg-[#FFB800] text-black py-2 px-4 text-center">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 font-semibold">
-          <span className="text-sm md:text-base">Already a Toast POS Customer? You're pre-approved! Funding in as little as 24 hours</span>
-          <span className="hidden md:inline">|</span>
-          <a href="tel:617-533-3190" className="flex items-center gap-2">
-            <Phone className="w-4 h-4" />
-            <span>Call Us: (617) 533-3190</span>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-600 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-full w-full bg-green-600"></span>
-            </span>
-          </a>
-        </div>
+        <span className="text-sm md:text-base font-semibold">Already a Toast POS Customer? You're pre-approved! Funding in as little as 24 hours</span>
       </div>
 
       {/* Header - reduced padding */}

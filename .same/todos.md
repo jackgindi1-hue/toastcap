@@ -5,6 +5,7 @@
 - **GitHub Repo**: jackgindi1-hue/toastcap
 - **NEVER EVER touch Highline Funding project!!!**
 - **Phone**: (617) 533-3190
+- **LOGO FILE**: toast-capital-logo.png must be the Toast Capital logo (toast icon + CAPITAL text), NOT Highline!
 
 ## Completed
 - [x] New logo saved (toast-capital-logo.png)
@@ -17,6 +18,7 @@
 - [x] Restored footer to original simple version (removed "Get In Touch" and social buttons)
 - [x] Updated all pages: page.tsx, quote, upload, dlvc, docusign, privacy, thank-you-upload, thank-you-dlvc
 - [x] NEW LOGO - Updated Toast Capital logo (orange toast icon + black "capital" text)
+- [x] FIXED: Replaced wrong Highline logo with correct Toast Capital logo (committed 2026-03-13)
 
 ## Pending
 - [ ] None - site is live at toastcap.com
