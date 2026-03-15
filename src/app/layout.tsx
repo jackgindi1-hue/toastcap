@@ -17,9 +17,12 @@ export const metadata: Metadata = {
   title: "Toast Capital | Fast & Flexible Business Funding",
   description: "Access loans ranging from $2,000 to $2,000,000 with Toast Capital. Fast approval, flexible repayment, and no credit score requirements. Get funded as soon as the next business day.",
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   openGraph: {
     title: "Toast Capital | Fast & Flexible Business Funding",
@@ -35,6 +38,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.svg" />
+      </head>
       <body suppressHydrationWarning className="antialiased">
         <ClientBody>{children}</ClientBody>
       </body>
