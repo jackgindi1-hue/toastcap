@@ -524,6 +524,109 @@ export async function startDripCampaign(leadId: string, startAtStep: number = 1)
   });
 }
 
+// BULK start drip - uses only 2 DB calls instead of 3 per lead
+export async function bulkStartDripCampaign(
+  leadIds: string[],
+  startAtStep: number = 1
+): Promise<{
+  started: number;
+  skipped: number;
+  skipReasons: { notFound: number; noEmail: number; emailBounced: number; alreadyInDrip: number };
+  skippedDetails: { id: string; business: string; reason: string }[];
+  startedIds: string[];
+}> {
+  const validStep = Math.max(1, Math.min(startAtStep, DRIP_TOTAL_STEPS));
+  const now = new Date();
+  const sendHour = DRIP_SEND_HOURS[validStep - 1] || 9;
+
+  const nextDripDate = new Date(now);
+  nextDripDate.setHours(sendHour, 0, 0, 0);
+  if (nextDripDate <= now) {
+    nextDripDate.setDate(nextDripDate.getDate() + 1);
+  }
+
+  // 1. Fetch ALL leads in ONE query
+  const { data: rows, error } = await supabase
+    .from('leads')
+    .select('*')
+    .in('id', leadIds);
+
+  if (error) {
+    console.error('bulkStartDripCampaign fetch error:', error);
+    throw error;
+  }
+
+  const leads = (rows || []).map(rowToLead);
+  const leadMap = new Map<string, Lead>(leads.map(l => [l.id, l]));
+
+  const skipReasons = { notFound: 0, noEmail: 0, emailBounced: 0, alreadyInDrip: 0 };
+  const skippedDetails: { id: string; business: string; reason: string }[] = [];
+  const eligibleIds: string[] = [];
+
+  // 2. Filter in memory
+  for (const leadId of leadIds) {
+    const lead = leadMap.get(leadId);
+
+    if (!lead) {
+      skipReasons.notFound++;
+      skippedDetails.push({ id: leadId, business: '?', reason: 'Lead not found' });
+      continue;
+    }
+
+    if (!lead.email || !lead.email.trim()) {
+      skipReasons.noEmail++;
+      skippedDetails.push({ id: leadId, business: lead.businessName || '?', reason: 'No email' });
+      continue;
+    }
+
+    if (lead.emailBounced) {
+      skipReasons.emailBounced++;
+      skippedDetails.push({ id: leadId, business: lead.businessName || '?', reason: 'Email bounced' });
+      continue;
+    }
+
+    if (lead.dripCampaign) {
+      skipReasons.alreadyInDrip++;
+      skippedDetails.push({ id: leadId, business: lead.businessName || '?', reason: `Already in drip step ${lead.dripStep || 0}` });
+      continue;
+    }
+
+    eligibleIds.push(leadId);
+  }
+
+  // 3. Bulk update ALL eligible leads in ONE query
+  if (eligibleIds.length > 0) {
+    const { error: updateError } = await supabase
+      .from('leads')
+      .update({
+        drip_campaign: 'cold_outreach',
+        drip_step: validStep - 1,
+        drip_total_steps: DRIP_TOTAL_STEPS,
+        next_drip_at: nextDripDate.toISOString(),
+        drip_paused: false,
+        drip_completed_at: null,
+        last_drip_sent_at: null,
+        updated_at: now.toISOString(),
+      })
+      .in('id', eligibleIds);
+
+    if (updateError) {
+      console.error('bulkStartDripCampaign update error:', updateError);
+      throw updateError;
+    }
+  }
+
+  console.log(`✅ Bulk drip: ${eligibleIds.length} started, ${leadIds.length - eligibleIds.length} skipped`);
+
+  return {
+    started: eligibleIds.length,
+    skipped: leadIds.length - eligibleIds.length,
+    skipReasons,
+    skippedDetails: skippedDetails.slice(0, 20),
+    startedIds: eligibleIds,
+  };
+}
+
 export async function pauseDripCampaign(leadId: string): Promise<Lead | null> {
   return updateLead(leadId, { dripPaused: true });
 }
@@ -612,22 +715,6 @@ export async function markEmailBouncedByAddress(email: string): Promise<Lead | n
   const lead = await findLeadByEmail(email);
   if (!lead) return null;
   return markEmailBounced(lead.id);
-}
-
-export async function bulkStartDripCampaign(
-  leadIds: string[],
-  startAtStep?: number
-): Promise<{ started: number; skipped: number }> {
-  let started = 0;
-  let skipped = 0;
-
-  for (const leadId of leadIds) {
-    const result = await startDripCampaign(leadId, startAtStep);
-    if (result) started++;
-    else skipped++;
-  }
-
-  return { started, skipped };
 }
 
 // ============================================
