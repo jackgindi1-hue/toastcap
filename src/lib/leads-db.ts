@@ -330,17 +330,35 @@ export async function deleteAllLeads(): Promise<number> {
 }
 
 export async function getAllLeads(): Promise<Lead[]> {
-  const { data, error } = await supabase
-    .from('leads')
-    .select('*')
-    .order('created_at', { ascending: false });
+  // Supabase defaults to 1000 rows - we need to fetch all with pagination
+  const allRows: any[] = [];
+  const pageSize = 1000;
+  let page = 0;
+  let hasMore = true;
 
-  if (error) {
-    console.error('Error fetching leads:', error);
-    return [];
+  while (hasMore) {
+    const { data, error } = await supabase
+      .from('leads')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range(page * pageSize, (page + 1) * pageSize - 1);
+
+    if (error) {
+      console.error('Error fetching leads:', error);
+      break;
+    }
+
+    if (data && data.length > 0) {
+      allRows.push(...data);
+      page++;
+      hasMore = data.length === pageSize; // If we got a full page, there might be more
+    } else {
+      hasMore = false;
+    }
   }
 
-  return (data || []).map(rowToLead);
+  console.log(`📊 getAllLeads: Fetched ${allRows.length} total leads`);
+  return allRows.map(rowToLead);
 }
 
 export async function findLeadByEmail(email: string): Promise<Lead | null> {
@@ -568,16 +586,29 @@ export async function bulkStartDripCampaign(
   }
 
   // 2. Get all emails already in a drip sequence (across ALL leads)
-  const { data: inDripRows } = await supabase
-    .from('leads')
-    .select('email')
-    .not('drip_campaign', 'is', null);
+  // Paginate to get all emails (Supabase defaults to 1000)
+  const inDripEmails: string[] = [];
+  let dripPage = 0;
+  let hasMoreDrip = true;
+  const dripPageSize = 1000;
 
-  const emailsAlreadyInDrip = new Set(
-    (inDripRows || [])
-      .map(r => r.email?.toLowerCase().trim())
-      .filter(Boolean)
-  );
+  while (hasMoreDrip) {
+    const { data: inDripRows } = await supabase
+      .from('leads')
+      .select('email')
+      .not('drip_campaign', 'is', null)
+      .range(dripPage * dripPageSize, (dripPage + 1) * dripPageSize - 1);
+
+    if (inDripRows && inDripRows.length > 0) {
+      inDripEmails.push(...inDripRows.map(r => r.email?.toLowerCase().trim()).filter(Boolean));
+      dripPage++;
+      hasMoreDrip = inDripRows.length === dripPageSize;
+    } else {
+      hasMoreDrip = false;
+    }
+  }
+
+  const emailsAlreadyInDrip = new Set(inDripEmails);
 
   console.log(`📧 Found ${emailsAlreadyInDrip.size} emails already in drip sequences`);
 
