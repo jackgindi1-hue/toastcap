@@ -542,7 +542,7 @@ export async function bulkStartDripCampaign(
 ): Promise<{
   started: number;
   skipped: number;
-  skipReasons: { notFound: number; noEmail: number; emailBounced: number; alreadyInDrip: number };
+  skipReasons: { notFound: number; noEmail: number; emailBounced: number; alreadyInDrip: number; emailAlreadyInDrip: number };
   skippedDetails: { id: string; business: string; reason: string }[];
   startedIds: string[];
 }> {
@@ -567,14 +567,29 @@ export async function bulkStartDripCampaign(
     throw error;
   }
 
+  // 2. Get all emails already in a drip sequence (across ALL leads)
+  const { data: inDripRows } = await supabase
+    .from('leads')
+    .select('email')
+    .not('drip_campaign', 'is', null);
+
+  const emailsAlreadyInDrip = new Set(
+    (inDripRows || [])
+      .map(r => r.email?.toLowerCase().trim())
+      .filter(Boolean)
+  );
+
+  console.log(`📧 Found ${emailsAlreadyInDrip.size} emails already in drip sequences`);
+
   const leads = (rows || []).map(rowToLead);
   const leadMap = new Map<string, Lead>(leads.map(l => [l.id, l]));
 
-  const skipReasons = { notFound: 0, noEmail: 0, emailBounced: 0, alreadyInDrip: 0 };
+  const skipReasons = { notFound: 0, noEmail: 0, emailBounced: 0, alreadyInDrip: 0, emailAlreadyInDrip: 0 };
   const skippedDetails: { id: string; business: string; reason: string }[] = [];
   const eligibleIds: string[] = [];
+  const emailsBeingAdded = new Set<string>(); // Track emails we're adding in this batch
 
-  // 2. Filter in memory
+  // 3. Filter in memory
   for (const leadId of leadIds) {
     const lead = leadMap.get(leadId);
 
@@ -590,6 +605,8 @@ export async function bulkStartDripCampaign(
       continue;
     }
 
+    const emailLower = lead.email.toLowerCase().trim();
+
     if (lead.emailBounced) {
       skipReasons.emailBounced++;
       skippedDetails.push({ id: leadId, business: lead.businessName || '?', reason: 'Email bounced' });
@@ -602,6 +619,21 @@ export async function bulkStartDripCampaign(
       continue;
     }
 
+    // Check if this email is already in a drip (from another lead record)
+    if (emailsAlreadyInDrip.has(emailLower)) {
+      skipReasons.emailAlreadyInDrip++;
+      skippedDetails.push({ id: leadId, business: lead.businessName || '?', reason: 'Email already in drip sequence (different lead)' });
+      continue;
+    }
+
+    // Check if we're already adding this email in this batch (duplicate in import)
+    if (emailsBeingAdded.has(emailLower)) {
+      skipReasons.emailAlreadyInDrip++;
+      skippedDetails.push({ id: leadId, business: lead.businessName || '?', reason: 'Duplicate email in this batch' });
+      continue;
+    }
+
+    emailsBeingAdded.add(emailLower);
     eligibleIds.push(leadId);
   }
 
