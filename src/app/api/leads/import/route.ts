@@ -3,6 +3,7 @@ import { createLeadsBulk } from '@/lib/leads-db';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60; // 60 seconds for large imports
 
 interface ImportedLead {
   firstName: string;

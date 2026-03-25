@@ -243,16 +243,27 @@ export async function createLeadsBulk(leadsData: Partial<Lead>[]): Promise<{ cre
     return { created: 0, errors };
   }
 
-  const { error } = await supabase
-    .from('leads')
-    .insert(rows);
+  // Batch insert in chunks of 500 to avoid Supabase limits
+  const BATCH_SIZE = 500;
+  let created = 0;
 
-  if (error) {
-    console.error('Bulk insert error:', error);
-    throw new Error(error.message);
+  for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+    const batch = rows.slice(i, i + BATCH_SIZE);
+    const { error } = await supabase
+      .from('leads')
+      .insert(batch);
+
+    if (error) {
+      console.error(`Bulk insert error (batch ${i / BATCH_SIZE + 1}):`, error);
+      errors.push(`Batch ${i / BATCH_SIZE + 1} failed: ${error.message}`);
+    } else {
+      created += batch.length;
+    }
+
+    console.log(`📥 Imported batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(rows.length / BATCH_SIZE)}: ${batch.length} leads`);
   }
 
-  return { created: rows.length, errors };
+  return { created, errors };
 }
 
 export async function getLead(id: string): Promise<Lead | null> {
