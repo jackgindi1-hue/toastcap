@@ -1,0 +1,69 @@
+[images]
+  remote_images = ["https://source.unsplash.com/.*", "https://images.unsplash.com/.*", "https://ext.same-assets.com/.*", "https://ugc.same-assets.com/.*"]
+
+[build]
+  command = "bun install && bun run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+  BUN_VERSION = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# ============================================
+# Functions Configuration
+# ============================================
+[functions]
+  node_bundler = "esbuild"
+
+# ============================================
+# Scheduled Functions (Cron Jobs)
+# ============================================
+
+# Process drip campaigns every hour
+[functions."drip-processor"]
+  schedule = "0 * * * *"
+
+# ============================================
+# 301 Redirects: toastcap.com → toastcapital.com
+# ============================================
+
+# Redirect all toastcap.com traffic to toastcapital.com (with path preservation)
+[[redirects]]
+  from = "https://toastcap.com/*"
+  to = "https://toastcapital.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.toastcap.com/*"
+  to = "https://toastcapital.com/:splat"
+  status = 301
+  force = true
+
+# Redirect www.toastcapital.com to toastcapital.com (canonical URL)
+[[redirects]]
+  from = "https://www.toastcapital.com/*"
+  to = "https://toastcapital.com/:splat"
+  status = 301
+  force = true
+
+# ============================================
+# Security Headers (SSL/HTTPS enforcement)
+# ============================================
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Strict Transport Security - forces HTTPS for 1 year
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Prevent clickjacking
+    X-Frame-Options = "SAMEORIGIN"
+    # Prevent MIME type sniffing
+    X-Content-Type-Options = "nosniff"
+    # XSS Protection
+    X-XSS-Protection = "1; mode=block"
+    # Referrer Policy
+    Referrer-Policy = "strict-origin-when-cross-origin"
