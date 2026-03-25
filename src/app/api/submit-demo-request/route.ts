@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateDemoConfirmationEmail } from './email-template';
 import { getDripEmail1, getDripEmail2, getDripEmail3 } from './drip-emails';
+import { findLeadByEmail, stopDripCampaign } from '@/lib/leads-db';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -23,6 +24,18 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('📋 Lead:', formData.firstName, formData.lastName, '-', formData.businessName);
+
+    // STOP COLD OUTREACH DRIP - They filled out the quote, no need to keep emailing them!
+    try {
+      const existingLead = await findLeadByEmail(formData.email);
+      if (existingLead && existingLead.dripCampaign) {
+        await stopDripCampaign(existingLead.id);
+        console.log('🛑 Stopped cold outreach drip for:', formData.email);
+      }
+    } catch (e) {
+      // Non-critical, don't block form submission
+      console.log('⚠️ Could not check/stop drip:', e);
+    }
 
     // SEND EMAILS
     const apiKey = process.env.RESEND_API_KEY;
