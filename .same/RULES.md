@@ -1,4 +1,70 @@
-# RULES - DO NOT BREAK THESE
+# Toast Capital Project Rules
+
+## CRITICAL: Git Backup with Every Deploy
+
+**ALWAYS push to GitHub with every deploy for safety!**
+
+### GitHub Repository
+- **URL**: https://github.com/jackgindi1-hue/toastcap
+- **Visibility**: Private
+- **Branch**: master
+
+### Workflow (MUST FOLLOW)
+
+1. **Before making changes**: Commit current state as backup
+   ```bash
+   cd toastcap && git add -A && git commit -m "Pre-changes backup: [description]"
+   ```
+
+2. **After making changes**: Commit the changes
+   ```bash
+   cd toastcap && git add -A && git commit -m "Version X: [description]"
+   ```
+
+3. **Before every deploy**: Push to GitHub
+   ```bash
+   cd toastcap && git push origin master
+   ```
+
+4. **Deploy to Netlify**
+
+### Why This Matters
+- Git push is SAFE - it only copies data, never deletes
+- If AI makes editing mistakes, we can recover with `git checkout`
+- Full history of every change is preserved on GitHub
+- Easy rollback: `git reset --hard <commit>` or `git checkout <commit> -- <file>`
+
+### Recovery Commands
+```bash
+# See what changed
+git diff
+
+# Undo all uncommitted changes
+git checkout .
+
+# Go back to specific commit
+git reset --hard <commit-hash>
+
+# Restore specific file from commit
+git checkout <commit-hash> -- path/to/file
+```
+
+---
+
+## Other Project Rules
+
+### Email Sending
+- All applicant emails should BCC support@toastcapital.com
+- Drip emails send at 9 AM and 1 PM Eastern Time
+- Always use proper Eastern Time handling (DST-aware)
+
+### Database
+- Leads stored in Supabase PostgreSQL
+- Analytics engagement data in Netlify Blobs (can be reset if corrupted)
+
+### Deployment
+- Deploy as dynamic site (not static) - has API routes
+- Site URL: https://toastcapital.com
 
 ## FORBIDDEN ACTIONS
 1. **DO NOT change ANYTHING without explicit user permission**
