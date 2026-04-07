@@ -1,0 +1,5 @@
+/admin-dashboard
+  Basic-Auth: toastadmin:SecurePass2026!
+
+/admin-dashboard/*
+  Basic-Auth: toastadmin:SecurePass2026!
